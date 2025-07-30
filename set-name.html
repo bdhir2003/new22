@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Name - Mamello Makhele</title>
+</head>
+<body>
+    <h1>Setting your name to Mamello Makhele...</h1>
+    <p id="status">Working...</p>
+    
+    <script>
+        // Set the hero name to Mamello Makhele
+        console.log('Setting hero name to Mamello Makhele...');
+        
+        // Get existing data or create new
+        let portfolioData = JSON.parse(localStorage.getItem('portfolioData') || '{}');
+        
+        // Initialize objects if they don't exist
+        if (!portfolioData.hero) portfolioData.hero = {};
+        if (!portfolioData.personal) portfolioData.personal = {};
+        
+        // Set hero name
+        portfolioData.hero.name = 'Mamello Makhele';
+        portfolioData.personal.fullName = 'Mamello Makhele';
+        
+        // Save back to localStorage
+        localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+        
+        console.log('Name set successfully!');
+        console.log('Hero name:', portfolioData.hero.name);
+        console.log('Full name:', portfolioData.personal.fullName);
+        
+        // Force reload the main page to ensure it picks up the changes
+        setTimeout(() => {
+            document.getElementById('status').innerHTML = `
+                <strong>✅ Name set successfully!</strong><br>
+                Hero name: ${portfolioData.hero.name}<br>
+                Full name: ${portfolioData.personal.fullName}<br><br>
+                <a href="index.html">Go to Portfolio</a> | <a href="admin.html">Go to Admin Panel</a><br><br>
+                <button onclick="window.location.reload()">Refresh This Page</button>
+                <button onclick="window.location.href='index.html'">Go to Portfolio Now</button>
+            `;
+        }, 500);
+    </script>
+</body>
+</html>

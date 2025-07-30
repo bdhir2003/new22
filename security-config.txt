@@ -1,0 +1,20 @@
+# Add this to your netlify.toml file for better security
+
+[[redirects]]
+  from = "/admin*"
+  to = "/.netlify/functions/admin"
+  status = 401
+  headers = {X-Robots-Tag = "noindex"}
+
+# Password protect admin pages
+[[headers]]
+  for = "/secret-*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# Block access to admin files for search engines
+[[headers]]
+  for = "/admin*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

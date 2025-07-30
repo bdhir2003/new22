@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear All Data</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            margin: 20px;
+        }
+        h1 { color: #333; margin-bottom: 20px; }
+        p { color: #666; margin-bottom: 30px; line-height: 1.6; }
+        button {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        button:hover { background: #d32f2f; }
+        .secondary { background: #2196f3; }
+        .secondary:hover { background: #1976d2; }
+        .success { color: #4caf50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Clear All Portfolio Data</h1>
+        <p>This will remove all default content and any saved data so you can start completely fresh with your own content through the admin panel.</p>
+        
+        <div id="status"></div>
+        
+        <button onclick="clearAllData()">Clear All Data</button>
+        <button class="secondary" onclick="goToAdmin()">Go to Admin Panel</button>
+        <button class="secondary" onclick="goToHome()">Go to Homepage</button>
+    </div>
+
+    <script>
+        function clearAllData() {
+            const status = document.getElementById('status');
+            
+            try {
+                // Clear all portfolio-related localStorage data
+                const keysToRemove = [
+                    'portfolioData',
+                    'githubToken',
+                    'autoSaveEnabled',
+                    'adminAuthenticated',
+                    'adminLoginTime'
+                ];
+                
+                let cleared = 0;
+                keysToRemove.forEach(key => {
+                    if (localStorage.getItem(key)) {
+                        localStorage.removeItem(key);
+                        cleared++;
+                    }
+                });
+                
+                // Also clear sessionStorage
+                sessionStorage.clear();
+                
+                status.innerHTML = `<p class="success">✅ Successfully cleared ${cleared} data items and session storage!</p><p>You can now start fresh in the admin panel.</p>`;
+                
+            } catch (error) {
+                status.innerHTML = `<p style="color: #f44336;">❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        function goToAdmin() {
+            window.location.href = '/admin-login.html';
+        }
+        
+        function goToHome() {
+            window.location.href = '/index.html';
+        }
+    </script>
+</body>
+</html>

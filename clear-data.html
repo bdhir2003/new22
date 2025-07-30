@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Portfolio Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        button { padding: 10px 20px; font-size: 16px; margin: 10px 0; }
+        .clear-btn { background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .show-btn { background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #data-display { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; white-space: pre-wrap; font-family: monospace; max-height: 400px; overflow-y: auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Portfolio Data Management</h1>
+    
+    <div class="section">
+        <h2>Current Data Overview</h2>
+        <button class="show-btn" onclick="showCurrentData()">Show Current Stored Data</button>
+        <div id="data-display"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Clear Data Options</h2>
+        <button class="clear-btn" onclick="clearAllData()">🗑️ Clear ALL Portfolio Data</button>
+        <button class="clear-btn" onclick="clearAwardsOnly()">🏆 Clear Awards Only</button>
+        <button class="clear-btn" onclick="clearSkillsOnly()">⚡ Clear Skills Only</button>
+        <button class="clear-btn" onclick="resetToDefaults()">🔄 Reset to Default Empty State</button>
+        <p id="result"></p>
+    </div>
+    
+    <div class="section">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Click "Show Current Stored Data" to see what's stored in your browser</li>
+            <li>Use the appropriate clear button to remove unwanted data</li>
+            <li>After clearing, refresh both your admin panel and main website</li>
+            <li>The main website should now show empty sections</li>
+        </ol>
+    </div>
+    
+    <script>
+        function showCurrentData() {
+            const data = localStorage.getItem('portfolioData');
+            const display = document.getElementById('data-display');
+            
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    display.textContent = JSON.stringify(parsed, null, 2);
+                } catch (e) {
+                    display.textContent = 'Raw data: ' + data;
+                }
+            } else {
+                display.textContent = 'No portfolio data found in localStorage.';
+            }
+        }
+        
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear ALL portfolio data? This cannot be undone.')) {
+                localStorage.removeItem('portfolioData');
+                localStorage.clear(); // Clear everything just to be sure
+                document.getElementById('result').innerHTML = '<strong style="color: green;">✅ All data cleared!</strong><br>Now refresh your admin panel and main website.';
+            }
+        }
+        
+        function clearAwardsOnly() {
+            const data = localStorage.getItem('portfolioData');
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    parsed.awards = [];
+                    localStorage.setItem('portfolioData', JSON.stringify(parsed));
+                    document.getElementById('result').innerHTML = '<strong style="color: green;">✅ Awards cleared!</strong><br>Now refresh your admin panel and main website.';
+                } catch (e) {
+                    clearAllData();
+                }
+            } else {
+                document.getElementById('result').textContent = 'No data to clear.';
+            }
+        }
+        
+        function clearSkillsOnly() {
+            const data = localStorage.getItem('portfolioData');
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    parsed.skills = [];
+                    localStorage.setItem('portfolioData', JSON.stringify(parsed));
+                    document.getElementById('result').innerHTML = '<strong style="color: green;">✅ Skills cleared!</strong><br>Now refresh your admin panel and main website.';
+                } catch (e) {
+                    clearAllData();
+                }
+            } else {
+                document.getElementById('result').textContent = 'No data to clear.';
+            }
+        }
+        
+        function resetToDefaults() {
+            if (confirm('Reset all data to clean defaults?')) {
+                const defaultData = {
+                    personal: {
+                        fullName: 'Your Name',
+                        title: '',
+                        tagline: '',
+                        profileImage: 'https://via.placeholder.com/300x300/3498db/ffffff?text=Your+Photo'
+                    },
+                    hero: {
+                        name: 'Your Name',
+                        title: '',
+                        tagline: '',
+                        subtitle: '',
+                        buttonText: 'Learn More About Me',
+                        buttonUrl: '#about'
+                    },
+                    about: {
+                        description: ""
+                    },
+                    education: [],
+                    skills: [],
+                    projects: [],
+                    contact: {
+                        email: 'your.email@example.com',
+                        phone: '+1 (555) 123-4567',
+                        linkedin: 'https://linkedin.com/in/yourprofile',
+                        github: 'https://github.com/yourusername',
+                        twitter: '',
+                        website: ''
+                    },
+                    publications: [],
+                    podcasts: [],
+                    videos: [],
+                    awards: [],
+                    settings: {
+                        siteTitle: 'Student Portfolio - Your Name',
+                        colorScheme: 'blue',
+                        metaDescription: 'Student portfolio showcasing projects and skills in web development'
+                    }
+                };
+                
+                localStorage.setItem('portfolioData', JSON.stringify(defaultData));
+                document.getElementById('result').innerHTML = '<strong style="color: green;">✅ Data reset to clean defaults!</strong><br>Now refresh your admin panel and main website.';
+            }
+        }
+    </script>
+</body>
+</html>

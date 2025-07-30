@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Access</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .access-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        .access-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .access-btn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .access-btn:hover {
+            transform: translateY(-2px);
+        }
+        .admin-btn {
+            background: #f093fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-container">
+        <h1>🎓 Mamello's Portfolio</h1>
+        <p>Choose where you'd like to go:</p>
+        
+        <div class="access-links">
+            <a href="index.html" class="access-btn">📱 View Portfolio</a>
+            <a href="secret-login-2025.html" class="access-btn admin-btn">🔐 Admin Login</a>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.9rem; color: #666;">
+            Bookmark this page for easy access to your portfolio admin panel.
+        </p>
+    </div>
+</body>
+</html>
